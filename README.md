@@ -17,6 +17,7 @@ Operator perspective on running AI infrastructure in regulated environments:
 - [AI Memory Crunch and Infrastructure Budgets](https://errorbudget.io/articles/ai-memory-crunch-infrastructure-budgets)
 - [Fintech Backup Architecture Patterns](https://errorbudget.io/articles/fintech-backup-architecture-patterns)
 - [VMware Private AI Foundation: Operator Notes](https://errorbudget.io/articles/vmware-private-ai-fintech-notes)
+- [InfiniBand vs Spectrum-X Ethernet](https://errorbudget.io/articles/infiniband-vs-spectrumx-ai-fabric)
 
 ## Free Tools
 
