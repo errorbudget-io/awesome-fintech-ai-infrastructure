@@ -19,6 +19,7 @@ Operator perspective on running AI infrastructure in regulated environments:
 - [VMware Private AI Foundation: Operator Notes](https://errorbudget.io/articles/vmware-private-ai-fintech-notes)
 - [InfiniBand vs Spectrum-X Ethernet](https://errorbudget.io/articles/infiniband-vs-spectrumx-ai-fabric)
 - [Error budgets for payment-critical systems](https://errorbudget.io/articles/error-budgets-payment-critical-systems)
+- [Security-first infrastructure for payments: isolation, key management, and PCI scope reduction](https://errorbudget.io/articles/security-first-payment-infrastructure)
 ## Free Tools
 
 Browser-based calculators and utilities:
