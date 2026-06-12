@@ -20,6 +20,7 @@ Operator perspective on running AI infrastructure in regulated environments:
 - [InfiniBand vs Spectrum-X Ethernet](https://errorbudget.io/articles/infiniband-vs-spectrumx-ai-fabric)
 - [Error budgets for payment-critical systems](https://errorbudget.io/articles/error-budgets-payment-critical-systems)
 - [Security-first infrastructure for payments: isolation, key management, and PCI scope reduction](https://errorbudget.io/articles/security-first-payment-infrastructure)
+- [Bandwidth contention at peak: backup vs traffic vs telemetry](https://errorbudget.io/articles/bandwidth-contention-traffic-peaks)
 ## Free Tools
 
 Browser-based calculators and utilities:
