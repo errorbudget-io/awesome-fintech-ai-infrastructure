@@ -35,6 +35,7 @@ Browser-based calculators and utilities:
 - [Timestamp Converter](https://tools.errorbudget.io/timestamp)
 - [HTTP Status Codes](https://tools.errorbudget.io/http-status)
 - [Common Ports Reference](https://tools.errorbudget.io/ports)
+- [NVIDIA AI Enterprise Licensing Calculator](https://tools.errorbudget.io/nvaie)
 
 ## Topics
 
