@@ -22,6 +22,7 @@ Operator perspective on running AI infrastructure in regulated environments:
 - [Security-first infrastructure for payments: isolation, key management, and PCI scope reduction](https://errorbudget.io/articles/security-first-payment-infrastructure)
 - [Bandwidth contention at peak: backup vs traffic vs telemetry](https://errorbudget.io/articles/bandwidth-contention-traffic-peaks)
 - [Running fraud-detection AI next to payments](https://errorbudget.io/articles/fraud-detection-ai-payment-infrastructure)
+- [Webshells in Java and PHP estates: detection and first-hour response](https://errorbudget.io/articles/webshell-detection-java-php)
 ## Free Tools
 
 Browser-based calculators and utilities:
