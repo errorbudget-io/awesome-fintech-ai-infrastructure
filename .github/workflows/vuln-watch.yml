@@ -1,0 +1,92 @@
+name: Vulnerability watch
+
+# Every 5 minutes (GitHub may delay scheduled runs under load): check the CISA KEV
+# catalog and GitHub critical advisories (Maven, Composer) for new items in the stacks
+# errorbudget.io covers, and publish a factual alert page for each one.
+#
+# Secrets: SITE_REPO (owner/name of the site repository) and SITE_TOKEN
+# (fine-grained token with Contents: read and write on that repository).
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vuln-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check configuration
+        id: cfg
+        env:
+          SITE_REPO: ${{ secrets.SITE_REPO }}
+          SITE_TOKEN: ${{ secrets.SITE_TOKEN }}
+        run: |
+          if [ -z "$SITE_REPO" ] || [ -z "$SITE_TOKEN" ]; then
+            echo "::warning::SITE_REPO / SITE_TOKEN not set; skipping."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.cfg.outputs.ready == 'true'
+
+      - uses: actions/checkout@v4
+        if: steps.cfg.outputs.ready == 'true'
+        with:
+          repository: ${{ secrets.SITE_REPO }}
+          token: ${{ secrets.SITE_TOKEN }}
+          path: site
+
+      - uses: actions/setup-python@v5
+        if: steps.cfg.outputs.ready == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Check feeds
+        if: steps.cfg.outputs.ready == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FIXES_DIR: site/src/content/fixes
+          STATE_FILE: data/vuln-watch-state.json
+        run: |
+          pip install --quiet requests
+          python scripts/vuln_watch.py | tee changes.txt
+
+      - name: Publish alerts to the site
+        if: steps.cfg.outputs.ready == 'true'
+        working-directory: site
+        run: |
+          if git status --porcelain -- src/content/fixes | grep -q .; then
+            git config user.name "errorbudget-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/content/fixes
+            git commit -q -m "vuln-watch: $(grep -c '^NEW ' ../changes.txt || true) new alert(s), $(grep -c '^UPDATED ' ../changes.txt || true) update(s)"
+            for i in 1 2 3; do
+              git pull -q --rebase origin HEAD && git push -q origin HEAD && break
+              sleep 5
+            done
+          fi
+
+      - name: Save watcher state
+        if: steps.cfg.outputs.ready == 'true'
+        run: |
+          if git status --porcelain -- data | grep -q .; then
+            git config user.name "errorbudget-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/vuln-watch-state.json
+            git commit -q -m "vuln-watch: update state"
+            for i in 1 2 3; do
+              git pull -q --rebase origin HEAD && git push -q origin HEAD && break
+              sleep 5
+            done
+          fi
